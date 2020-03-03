@@ -1,0 +1,34 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Mar  4 00:26:58 2020
+
+@author: shunsuke　　()
+"""
+
+import cv2
+#img = cv2.imread("img/img01.jpg")
+#height,width = img.shape[:2]
+#print(width)
+#print(height)
+#cv2.imshow("image",img)
+#cv2.waitKey(0)
+
+cap = cv2.VideoCapture("mov/mov01.avi")
+width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+count =  cap.get(cv2.CAP_PROP_FRAME_COUNT)
+fps = cap.get(cv2.CAP_PROP_FPS)
+
+num = 0
+while(cap.isOpened()):
+    ret,frame = cap.read()
+    if ret: # retは画像を取得成功フラグ
+        cv2.imshow("frame",frame)
+        filepath = "snapshot/snapshot_" + str(num) + ".jpg"
+        cv2.imwrite(filepath,frame)
+        
+        if cv2.waitKey(1) and 0xFF == ord("q"):
+            break
+    num += 1
+cap.release()
+cv2.destroyAllWindows()
